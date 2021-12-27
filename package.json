@@ -1,0 +1,54 @@
+{
+  "name": "@zhyd1997/draftjs-to-latex",
+  "version": "0.1.0",
+  "description": "convert draftjs contentState to latex source code.",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "test": "jest --runInBand",
+    "test:ci": "jest -ci",
+    "prebuild": "rimraf dist",
+    "build": "tsc",
+    "prepare": "husky install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zhyd1997/draftjs-to-latex.git"
+  },
+  "keywords": [
+    "draftjs",
+    "scanner",
+    "latex"
+  ],
+  "author": "Yadong Zhang",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/zhyd1997/draftjs-to-latex/issues"
+  },
+  "homepage": "https://github.com/zhyd1997/draftjs-to-latex#readme",
+  "devDependencies": {
+    "@babel/core": "^7.16.5",
+    "@babel/preset-env": "^7.16.5",
+    "@babel/preset-typescript": "^7.16.5",
+    "@types/draft-js": "^0.11.8",
+    "@types/jest": "^27.0.3",
+    "@typescript-eslint/eslint-plugin": "^5.8.0",
+    "@typescript-eslint/parser": "^5.8.0",
+    "babel-jest": "^27.4.5",
+    "draft-js": "^0.11.7",
+    "eslint": "^8.5.0",
+    "eslint-config-prettier": "^8.3.0",
+    "husky": "^7.0.4",
+    "jest": "^27.4.5",
+    "lint-staged": "^12.1.4",
+    "prettier": "2.5.1",
+    "ts-node": "^10.4.0",
+    "typescript": "^4.5.4"
+  },
+  "lint-staged": {
+    "**/*.ts": "prettier --write --ignore-unknown"
+  }
+}
