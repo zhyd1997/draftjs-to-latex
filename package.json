@@ -1,6 +1,6 @@
 {
   "name": "@zhyd1997/draftjs-to-latex",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "convert draftjs contentState to latex source code.",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
