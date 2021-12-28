@@ -1,4 +1,5 @@
 # draftjs-to-latex
+[![codecov](https://codecov.io/gh/zhyd1997/draftjs-to-latex/branch/main/graph/badge.svg?token=LFOSGIF627)](https://codecov.io/gh/zhyd1997/draftjs-to-latex)
 
 Convert [Draftjs](https://github.com/facebook/draft-js) content to LaTeX source code.
 
@@ -7,7 +8,7 @@ Convert [Draftjs](https://github.com/facebook/draft-js) content to LaTeX source 
 - [x] ESLint and Prettier
 - [x] TypeScript
 - [x] Jest
-- [] CI
+- [x] CI
 
 ## Features
 
