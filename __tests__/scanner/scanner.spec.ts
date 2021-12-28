@@ -116,27 +116,11 @@ describe("Scanner", () => {
     });
 
     describe("case 5", () => {
-      it("should return the correct tex", () => {
-        const { contentState, generatedTex } = testSample5;
-
-        const mockedContentState = convertFromRaw(contentState);
-
-        const tex = scan(mockedContentState);
-
-        expect(tex).toBe(generatedTex);
-      });
+      it.todo("should return the correct tex");
     });
 
     describe("case 6", () => {
-      it("should return the correct tex", () => {
-        const { contentState, generatedTex } = testSample6;
-
-        const mockedContentState = convertFromRaw(contentState);
-
-        const tex = scan(mockedContentState);
-
-        expect(tex).toBe(generatedTex);
-      });
+      it.todo("should return the correct tex");
     });
   });
 
