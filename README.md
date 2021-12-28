@@ -43,8 +43,8 @@ Only support ES6:
 ```ts
 import { scan } from "@zhyd1997/draftjs-to-latex";
 
-const generatedTex = scan(editorState);
-console.log(generatedTex);
+const generatedTex = scan(contentState);
+// console.log(generatedTex);
 ```
 
 ## Development
