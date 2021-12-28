@@ -137,10 +137,17 @@ export const scan = (contentState: ContentState) => {
             }
           } else if (blocks[index - 1].depth < block.depth) {
             const prev = blocks[index - 1].depth;
-            let current = block.depth;
+            let current = block.depth + 1;
             while (prev < current) {
               tex += beginning;
               current--;
+            }
+          } else if (blocks[index - 1].depth > block.depth) {
+            const prev = blocks[index - 1].depth;
+            let current = block.depth - 1;
+            while (prev > current) {
+              tex += beginning;
+              current++;
             }
           }
         } else if (blocks[index - 1].type === type) {
@@ -178,7 +185,7 @@ export const scan = (contentState: ContentState) => {
             }
           } else if (blocks[index + 1].depth < block.depth) {
             const next = blocks[index + 1].depth;
-            let current = block.depth;
+            let current = block.depth + 1;
             while (next < current) {
               tex += ending;
               current--;
