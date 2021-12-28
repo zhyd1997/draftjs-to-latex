@@ -1,6 +1,6 @@
 # draftjs-to-latex
 
-Convert [Draftjs](https://github.com/facebook/draft-js) content to LaTeX source.
+Convert [Draftjs](https://github.com/facebook/draft-js) content to LaTeX source code.
 
 ## TODO
 
