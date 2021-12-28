@@ -1,14 +1,14 @@
 # draftjs-to-latex
 [![codecov](https://codecov.io/gh/zhyd1997/draftjs-to-latex/branch/main/graph/badge.svg?token=LFOSGIF627)](https://codecov.io/gh/zhyd1997/draftjs-to-latex)
 
+![NPM](https://img.shields.io/npm/l/@zhyd1997/draftjs-to-latex)
+![npm (scoped)](https://img.shields.io/npm/v/@zhyd1997/draftjs-to-latex)
+
+![npm](https://img.shields.io/npm/dw/@zhyd1997/draftjs-to-latex?style=for-the-badge)
+![npm](https://img.shields.io/npm/dm/@zhyd1997/draftjs-to-latex?style=for-the-badge)
+![npm](https://img.shields.io/npm/dt/@zhyd1997/draftjs-to-latex?style=for-the-badge)
+
 Convert [Draftjs](https://github.com/facebook/draft-js) content to LaTeX source code.
-
-## TODO
-
-- [x] ESLint and Prettier
-- [x] TypeScript
-- [x] Jest
-- [x] CI
 
 ## Features
 
@@ -31,6 +31,21 @@ Convert [Draftjs](https://github.com/facebook/draft-js) content to LaTeX source 
 ## Limitations
 
 Not support [overlapping styles](https://draftjs.org/docs/advanced-topics-inline-styles/#overlapping-styles).
+
+## Usage
+```bash
+npm i @zhyd1997/draftjs-to-latex
+# yarn
+yarn add @zhyd1997/draftjs-to-latex
+```
+
+Only support ES6:
+```ts
+import { scan } from "@zhyd1997/draftjs-to-latex";
+
+const generatedTex = scan(editorState);
+console.log(generatedTex);
+```
 
 ## Development
 ```bash
