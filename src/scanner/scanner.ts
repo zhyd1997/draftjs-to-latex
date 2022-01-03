@@ -25,6 +25,10 @@ export const scan = (contentState: ContentState) => {
   // console.log(editorContentRaw);
 
   const { blocks, entityMap } = editorContentRaw;
+  // count the number of blocks that are greater than the current block.
+  let count = 0;
+  // use stack to handle beginning and ending pairs.
+  const endingsStack: string[] = [];
 
   blocks.forEach((block: RawDraftContentBlock, index: number) => {
     const { type, text, inlineStyleRanges, entityRanges } = block;
@@ -123,6 +127,7 @@ export const scan = (contentState: ContentState) => {
           while (curr) {
             tex += beginning;
             curr--;
+            endingsStack.push(ending);
           }
         } else if (blocks[index - 1].type !== type) {
           if (
@@ -134,6 +139,7 @@ export const scan = (contentState: ContentState) => {
             while (curr) {
               tex += beginning;
               curr--;
+              endingsStack.push(ending);
             }
           } else if (blocks[index - 1].depth < block.depth) {
             const prev = blocks[index - 1].depth;
@@ -141,6 +147,7 @@ export const scan = (contentState: ContentState) => {
             while (prev < current) {
               tex += beginning;
               current--;
+              endingsStack.push(ending);
             }
           } else if (blocks[index - 1].depth > block.depth) {
             const prev = blocks[index - 1].depth;
@@ -148,6 +155,7 @@ export const scan = (contentState: ContentState) => {
             while (prev > current) {
               tex += beginning;
               current++;
+              endingsStack.push(ending);
             }
           }
         } else if (blocks[index - 1].type === type) {
@@ -157,6 +165,7 @@ export const scan = (contentState: ContentState) => {
             while (prev < current) {
               tex += beginning;
               current--;
+              endingsStack.push(ending);
             }
           }
         }
@@ -180,25 +189,32 @@ export const scan = (contentState: ContentState) => {
           ) {
             let curr = block.depth + 1;
             while (curr) {
-              tex += ending;
+              tex += endingsStack.pop();
               curr--;
+            }
+
+            // decrement greater numbers.
+            while (count) {
+              tex += endingsStack.pop();
+              count--;
             }
           } else if (blocks[index + 1].depth < block.depth) {
             const next = blocks[index + 1].depth;
             let current = block.depth + 1;
             while (next < current) {
-              tex += ending;
+              tex += endingsStack.pop();
               current--;
             }
-          } else {
-            tex += ending;
+          } else if (blocks[index + 1].depth > block.depth) {
+            // increment greater numbers.
+            count++;
           }
         } else if (blocks[index + 1].type === type) {
           if (blocks[index + 1].depth < block.depth) {
             const next = blocks[index + 1].depth;
             let current = block.depth;
             while (next < current) {
-              tex += ending;
+              tex += endingsStack.pop();
               current--;
             }
           }
