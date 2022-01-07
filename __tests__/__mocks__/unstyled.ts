@@ -60,3 +60,30 @@ export const testUnStyledSample2 = {
  *
  *
  */
+export const testUnStyledSample3 = {};
+
+/**
+ * Case 4: text has special symbols, like `\` and `%`.
+ *
+ * @see https://tex.stackexchange.com/a/34586
+ *
+ * & % $ # _ { } \ ^ ~
+ */
+export const testUnStyledSample4 = {
+  contentState: {
+    blocks: [
+      {
+        key: "foo",
+        text: "& % $ # _ { } \\ ^ ~",
+        type: "unstyled",
+        depth: 0,
+        inlineStyleRanges: [],
+        entityRanges: [],
+        data: {},
+      },
+    ],
+    entityMap: {},
+  },
+  generatedTex:
+    "\\& \\% \\$ \\# \\_ \\{ \\} \\textbackslash \\textasciicircum \\textasciitilde\n",
+};

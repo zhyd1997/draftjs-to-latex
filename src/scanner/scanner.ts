@@ -1,6 +1,24 @@
-import { ContentState, convertToRaw, RawDraftContentBlock } from "draft-js";
+import {
+  ContentState,
+  convertToRaw,
+  DraftBlockType,
+  DraftInlineStyleType,
+  RawDraftContentBlock,
+} from "draft-js";
 
-const texMap: any = {
+type TeXToken =
+  | "\\section"
+  | "\\subsection"
+  | "\\subsubsection"
+  | "\\item"
+  | "\\textbf"
+  | "\\textit"
+  | "\\underline"
+  | "\\texttt";
+
+type Token = Record<DraftBlockType | DraftInlineStyleType, TeXToken>;
+
+const texMap: Token = {
   "header-one": "\\section",
   "header-two": "\\subsection",
   "header-three": "\\subsubsection",
@@ -10,6 +28,58 @@ const texMap: any = {
   ITALIC: "\\textit",
   UNDERLINE: "\\underline",
   CODE: "\\texttt",
+};
+
+/**
+ * @see https://tex.stackexchange.com/a/34586
+ *
+ * symbols: & % $ # _ { } \ ^ ~
+ *
+ * @param text string
+ * @returns string
+ */
+const escapeText = (text: string): string => {
+  const textEscaped = text
+    .split("")
+    .map((char) => {
+      switch (char) {
+        case "&":
+          return "\\&";
+
+        case "%":
+          return "\\%";
+
+        case "$":
+          return "\\$";
+
+        case "#":
+          return "\\#";
+
+        case "_":
+          return "\\_";
+
+        case "{":
+          return "\\{";
+
+        case "}":
+          return "\\}";
+
+        case "\\":
+          return "\\textbackslash";
+
+        case "^":
+          return "\\textasciicircum";
+
+        case "~":
+          return "\\textasciitilde";
+
+        default:
+          return char;
+      }
+    })
+    .join("");
+
+  return textEscaped;
 };
 
 /**
@@ -48,7 +118,7 @@ export const scan = (contentState: ContentState) => {
                   0,
                   inlineStyleRanges[0].offset
                 );
-                tex += sourceCode;
+                tex += escapeText(sourceCode);
               }
 
               //  normal case
@@ -60,11 +130,13 @@ export const scan = (contentState: ContentState) => {
 
                 if (offset > gap) {
                   const sourceCode = text.substring(gap, offset);
-                  tex += sourceCode;
+                  tex += escapeText(sourceCode);
                 }
               }
 
-              const content = text.substring(offset, offset + length);
+              const content = escapeText(
+                text.substring(offset, offset + length)
+              );
               const sourceCode = `${texMap[style]}{${content}}`;
 
               tex += sourceCode;
@@ -76,14 +148,14 @@ export const scan = (contentState: ContentState) => {
               ) {
                 const sourceCode = text.substring(offset + length);
 
-                tex += sourceCode;
+                tex += escapeText(sourceCode);
               }
             }
           );
         } else if (entityRanges.length) {
           // TODO
         } else {
-          tex += text;
+          tex += escapeText(text);
         }
         break;
       case "atomic":
@@ -171,7 +243,7 @@ export const scan = (contentState: ContentState) => {
         }
 
         // eslint-disable-next-line no-case-declarations
-        const sourceCode = `${texMap[type]} ${text}\n`;
+        const sourceCode = `${texMap[type]} ${escapeText(text)}\n`;
 
         tex += sourceCode;
 
@@ -221,7 +293,7 @@ export const scan = (contentState: ContentState) => {
         }
         break;
       default:
-        tex += `${texMap[type]}{${text}}`;
+        tex += `${texMap[type]}{${escapeText(text)}}`;
     }
 
     allTeX += tex;

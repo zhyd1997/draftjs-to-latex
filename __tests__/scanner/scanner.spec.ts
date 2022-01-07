@@ -3,6 +3,8 @@ import { scan } from "../../src/scanner";
 import {
   testUnStyledSample1,
   testUnStyledSample2,
+  testUnStyledSample3,
+  testUnStyledSample4,
 } from "../__mocks__/unstyled";
 import {
   noPreviousBlock,
@@ -45,6 +47,20 @@ describe("Scanner", () => {
 
     describe("overlapping styles", () => {
       it.todo("should return the correct tex");
+    });
+
+    describe("escape especial symbols", () => {
+      it("should return the correct tex", () => {
+        const { contentState, generatedTex } = testUnStyledSample4;
+
+        const mockedContentState = convertFromRaw(
+          contentState as RawDraftContentState
+        );
+
+        const tex = scan(mockedContentState);
+
+        expect(tex).toBe(generatedTex);
+      });
     });
   });
 
